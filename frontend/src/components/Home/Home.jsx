@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 const Home = () => {
   const history = useHistory();
