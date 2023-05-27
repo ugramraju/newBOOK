@@ -1,80 +1,65 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const history = useHistory();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const [msg, setMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!formData.email || !formData.password) {
-      setErrorMsg("Please fill in all the fields");
+    if (!data.email || !data.password) {
+      setMsg("Please fill all the fields");
       return;
     }
-
     try {
-      const response = await axios.post(
-        "https://notebook-gpjp.onrender.com/api/login",
-        formData,
-        { withCredentials: true }
-      );
-      console.log(response.data);
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        history.push("/home");
+      const res = await axios.post("https://notebook-gpjp.onrender.com/api/login", data, {
+        withCredentials: true,
+      });
+      if (res.data.token) {
+        // Save the token to local storage or a state management solution
+        // Example using local storage:
+        localStorage.setItem("token", res.data.token);
+        navigate("/displayData");
+      } else {
+        setMsg("Invalid email or password");
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMsg(error.response.data.message);
-      } else {
-        setErrorMsg("An error occurred. Please try again.");
-      }
+      setMsg("An error occurred");
       console.log(error);
     }
   };
 
   return (
-    <div className="box2">
-      <h4 id="Login-Heading">Login</h4>
-      {errorMsg && <span id="errMsg-2">{errorMsg}</span>}
-      <form id="form" onSubmit={handleSubmit}>
+    <div className="logIn_container">
+      <h1>SignIn</h1>
+      <span>{msg}</span>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <br />
         <input
           type="email"
-          placeholder="Email"
-          id="user_email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          id="email"
+          placeholder="Enter Email"
+          value={data.email || ""}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
         />
+        <br />
+        <label htmlFor="password">Password</label>
         <br />
         <input
           type="password"
-          placeholder="Password"
-          id="user_password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
+          id="password"
+          placeholder="Enter Password"
+          value={data.password || ""}
+          onChange={(e) => setData({ ...data, password: e.target.value })}
         />
         <br />
-        <button type="submit" id="btn">
-          LOGIN
-        </button>
+        <input type="submit" value="Submit" />
+        <br />
+        <Link to="/signUp">SignUp?</Link>
       </form>
-      <span id="signup-btn">
-        <Link to="/signup">Create an account</Link>
-      </span>
     </div>
   );
 };

@@ -1,92 +1,87 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const history = useHistory();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
+  const [data, setData] = useState({});
+  const [msg, setErrormsg] = useState("");
+  const [msg1, setErrormsg1] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setErrorMsg("Please fill in all the details");
+    if (!data.email || !data.password) {
+      setErrormsg("Kindly Fill all the details");
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMsg("Password and Confirm Password do not match");
+    if (data.password !== data.confirmpassword) {
+      setErrormsg("Password and Confirm Password are not matching");
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "https://notebook-gpjp.onrender.com/api/register",
-        formData
-      );
-      console.log(response.data);
-
-      if (response.data.message === "Registered successfully") {
-        history.push("/login");
-      }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setErrorMsg(error.response.data.message);
-      } else {
-        setErrorMsg("An error occurred. Please try again.");
-      }
-      console.log(error);
-    }
+    axios
+      .post("https://notebook-gpjp.onrender.com/api/register", data)
+      .then((res) => {
+        setData({});
+        setErrormsg("");
+        setErrormsg1("Registration Done Go and SignIn");
+        if (res.data.message === "Registered successfully") {
+          navigate("/");
+        }
+        console.log(res.data)
+      })
+      .catch((e) => {
+        console.log(e.response.data);
+        if (e.response.data.message === "User already exists") {
+          setErrormsg("Contact already exists please go and signin");
+        }
+      });
   };
 
   return (
     <div className="box1">
       <h4 id="SignUp-Heading">Registration</h4>
-      {errorMsg && <span id="errMsg-1">{errorMsg}</span>}
-      <form id="form" onSubmit={handleSubmit}>
+      <span id="errMsg-1">{msg}</span>
+      <span id="errmessage">{msg1}</span>
+      <form id="form">
         <input
           type="email"
           placeholder="Email"
           id="user_email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          value={data.email || ""}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
         />
         <br />
         <input
           type="password"
           placeholder="Password"
-          id="user_password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
+          id="user_passowrd"
+          value={data.password || ""}
+          onChange={(e) =>
+            setData({ ...data, password: e.target.value, confirmpassword: data.confirmpassword })
+          }
         />
         <br />
         <input
           type="password"
           placeholder="Confirm Password"
-          id="user_confirmPassword"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
+          id="user_conPassword"
+          value={data.confirmpassword || ""}
+          onChange={(e) =>
+            setData({ ...data, confirmpassword: e.target.value, password: data.password })
+          }
         />
         <br />
-        <button type="submit" id="btn">
+        <button type="submit" id="btn" onClick={handleSubmit}> 
           REGISTER
         </button>
       </form>
+      <i className="fa-thin fa-arrow-left-long"></i>
+
       <span id="signin-btn">
-        <Link to="/login">SignIn</Link>
+        <Link to="/">SignIn</Link>
       </span>
     </div>
   );
