@@ -8,7 +8,7 @@ const SignUp = () => {
   const [msg, setErrormsg] = useState("");
   const [msg1, setErrormsg1] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
@@ -21,23 +21,24 @@ const SignUp = () => {
       return;
     }
 
-    axios
-      .post("https://notebook-gpjp.onrender.com/api/register", data)
-      .then((res) => {
-        setData({});
-        setErrormsg("");
-        setErrormsg1("Registration Done Go and SignIn");
-        if (res.data.message === "Registered successfully") {
-          navigate("/");
-        }
-        console.log(res.data)
-      })
-      .catch((e) => {
-        console.log(e.response.data);
-        if (e.response.data.message === "User already exists") {
-          setErrormsg("Contact already exists please go and signin");
-        }
-      });
+    try {
+      const res = await axios.post(
+        "https://notebook-gpjp.onrender.com/api/register",
+        data
+      );
+      setData({});
+      setErrormsg("");
+      setErrormsg1("Registration Done! Go and Sign In");
+      if (res.data.message === "Registered successfully") {
+        navigate("/");
+      }
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.response.data);
+      if (error.response.data.message === "User already exists") {
+        setErrormsg("Contact already exists. Please go and sign in");
+      }
+    }
   };
 
   return (
