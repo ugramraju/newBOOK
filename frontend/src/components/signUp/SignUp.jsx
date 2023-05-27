@@ -5,19 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 const SignUp = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({});
-  const [msg, setErrormsg] = useState("");
-  const [msg1, setErrormsg1] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
-      setErrormsg("Kindly fill in all the details");
+      setErrorMsg("Kindly fill in all the details.");
       return;
     }
 
-    if (data.password !== data.confirmpassword) {
-      setErrormsg("Password and Confirm Password do not match");
+    if (data.password !== data.confirmPassword) {
+      setErrorMsg("Password and Confirm Password do not match.");
       return;
     }
 
@@ -27,8 +27,8 @@ const SignUp = () => {
         data
       );
       setData({});
-      setErrormsg("");
-      setErrormsg1("Registration done! Go and sign in");
+      setErrorMsg("");
+      setSuccessMsg("Registration Successful! Please proceed to Sign In.");
       if (res.data.message === "Registered successfully") {
         navigate("/");
       }
@@ -36,7 +36,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error.response.data);
       if (error.response.data.message === "User already exists") {
-        setErrormsg("Contact already exists. Please go and sign in");
+        setErrorMsg("User already exists. Please go and sign in.");
       }
     }
   };
@@ -44,8 +44,8 @@ const SignUp = () => {
   return (
     <div className="box1">
       <h4 id="SignUp-Heading">Registration</h4>
-      <span id="errMsg-1">{msg}</span>
-      <span id="errmessage">{msg1}</span>
+      <span id="errMsg-1">{errorMsg}</span>
+      <span id="errmessage">{successMsg}</span>
       <form id="form">
         <input
           type="email"
@@ -53,31 +53,28 @@ const SignUp = () => {
           id="user_email"
           value={data.email || ""}
           onChange={(e) => setData({ ...data, email: e.target.value })}
+          autoComplete="username"
         />
         <br />
         <input
           type="password"
           placeholder="Password"
-          id="user_passowrd"
+          id="user_password"
           value={data.password || ""}
-          onChange={(e) =>
-            setData({ ...data, password: e.target.value, confirmpassword: data.confirmpassword })
-          }
-          autoComplete="new-password" // Added autocomplete attribute
+          onChange={(e) => setData({ ...data, password: e.target.value })}
+          autoComplete="new-password"
         />
         <br />
         <input
           type="password"
           placeholder="Confirm Password"
-          id="user_conPassword"
-          value={data.confirmpassword || ""}
-          onChange={(e) =>
-            setData({ ...data, confirmpassword: e.target.value, password: data.password })
-          }
-          autoComplete="new-password" // Added autocomplete attribute
+          id="user_confirmPassword"
+          value={data.confirmPassword || ""}
+          onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
+          autoComplete="new-password"
         />
         <br />
-        <button type="submit" id="btn" onClick={handleSubmit}> 
+        <button type="submit" id="btn" onClick={handleSubmit}>
           REGISTER
         </button>
       </form>
