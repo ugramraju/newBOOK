@@ -12,12 +12,12 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
-      setErrormsg("Kindly Fill all the details");
+      setErrormsg("Kindly fill in all the details");
       return;
     }
 
     if (data.password !== data.confirmpassword) {
-      setErrormsg("Password and Confirm Password are not matching");
+      setErrormsg("Password and Confirm Password do not match");
       return;
     }
 
@@ -28,7 +28,7 @@ const SignUp = () => {
       );
       setData({});
       setErrormsg("");
-      setErrormsg1("Registration Done! Go and Sign In");
+      setErrormsg1("Registration done! Go and sign in");
       if (res.data.message === "Registered successfully") {
         navigate("/");
       }
@@ -63,6 +63,7 @@ const SignUp = () => {
           onChange={(e) =>
             setData({ ...data, password: e.target.value, confirmpassword: data.confirmpassword })
           }
+          autoComplete="new-password" // Added autocomplete attribute
         />
         <br />
         <input
@@ -73,6 +74,7 @@ const SignUp = () => {
           onChange={(e) =>
             setData({ ...data, confirmpassword: e.target.value, password: data.password })
           }
+          autoComplete="new-password" // Added autocomplete attribute
         />
         <br />
         <button type="submit" id="btn" onClick={handleSubmit}> 
