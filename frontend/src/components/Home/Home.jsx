@@ -5,7 +5,7 @@ const Home = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/profile", {
+    fetch("https://notebook-gpjp.onrender.com/api/profile", {
       headers: {
         "x-token": localStorage.getItem("token"),
       },

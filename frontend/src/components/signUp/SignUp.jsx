@@ -22,7 +22,7 @@ const SignUp = () => {
     }
 
     axios
-      .post("http://localhost:8000/api/register", data)
+      .post("https://notebook-gpjp.onrender.com/api/register", data)
       .then((res) => {
         setData({});
         setErrormsg("");
