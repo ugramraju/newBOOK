@@ -12,7 +12,7 @@ const DisplayData = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("https://notebook-gpjp.onrender.com/api/getNotes", {
+        const response = await axios.get("https://new-ouln.onrender.com/api/getNotes", {
           headers: {
             "x-token": token,
           },
@@ -31,7 +31,7 @@ const DisplayData = () => {
       const confirmed = window.confirm("Are you sure you want to delete this note?");
       if (confirmed) {
         const token = localStorage.getItem("token");
-        await axios.delete(`https://notebook-gpjp.onrender.com/api/deleteNotes/${id}`, {
+        await axios.delete(`https://new-ouln.onrender.com/api/deleteNotes/${id}`, {
           headers: {
             "x-token": token,
           },
@@ -62,7 +62,7 @@ const DisplayData = () => {
     try {
       const token = localStorage.getItem("token");
       const updatedNote = await axios.put(
-        `https://notebook-gpjp.onrender.com/api/updateNotes/${id}`,
+        `https://new-ouln.onrender.com/api/updateNotes/${id}`,
         selectedNote,
         {
           headers: {

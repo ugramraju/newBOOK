@@ -23,7 +23,7 @@ const SignUp = () => {
 
     try {
       const res = await axios.post(
-        "https://notebook-gpjp.onrender.com/api/register",
+        "https://new-ouln.onrender.com/api/register",
         data
       );
       setData({});

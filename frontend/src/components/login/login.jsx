@@ -14,7 +14,7 @@ const Login = () => {
       return;
     }
     try {
-      const res = await axios.post("https://notebook-gpjp.onrender.com/api/login", data, {
+      const res = await axios.post("https://new-ouln.onrender.com/api/login", data, {
         withCredentials: true,
       });
       if (res.data.token) {
