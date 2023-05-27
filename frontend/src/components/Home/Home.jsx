@@ -1,42 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const Home = () => {
-  const [userData, setUserData] = useState(null);
+  const history = useHistory();
 
-  useEffect(() => {
-    fetch("https://notebook-gpjp.onrender.com/api/profile", {
-      headers: {
-        "x-token": localStorage.getItem("token"),
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          // User not found or server error occurred
-          console.log(data.message);
-        } else {
-          setUserData(data);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  const handleLogoutClick = () => {
+  const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/";
+    history.push("/login");
   };
 
   return (
-    <>
-      <h1>
-        Welcome <button onClick={handleLogoutClick}>Logout</button>
-      </h1>
-      <Link to="/formData">
-        <input type="button" value="Add Note" />
-      </Link>
-      {userData && <div>{userData.email.split("@")[0]}</div>}
-    </>
+    <div className="box3">
+      <h4 id="Welcome-Heading">Welcome!</h4>
+      <p id="email">{localStorage.getItem("email")}</p>
+      <button type="button" id="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
+      <Link to="/displaydata">Display Data</Link>
+    </div>
   );
 };
 

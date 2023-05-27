@@ -26,7 +26,7 @@ const Formdata = () => {
           'x-token': token,
         },
       };
-      const res = await axios.post('http://localhost:8000/api/notes', data, config);
+      const res = await axios.post('https://notebook-gpjp.onrender.com/api/notes', data, config);
       console.log(res.data);
       setData({ title: '', description: '' });
       navigate('/displayData');
