@@ -74,7 +74,9 @@ const SignUp = () => {
           placeholder="Confirm Password"
           id="user_confirmPassword"
           value={data.confirmPassword || ""}
-          onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
+          onChange={(e) =>
+            setData({ ...data, confirmPassword: e.target.value })
+          }
           autoComplete="on"
         />
         <br />
