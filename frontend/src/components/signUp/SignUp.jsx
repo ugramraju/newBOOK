@@ -24,7 +24,11 @@ const SignUp = () => {
     try {
       const res = await axios.post(
         "https://new-ouln.onrender.com/api/register",
-        data
+        {
+          email: data.email,
+          password: data.password,
+          confirmpassword: data.confirmPassword,
+        }
       );
       setData({});
       setErrorMsg("");
