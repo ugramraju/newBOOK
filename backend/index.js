@@ -7,7 +7,7 @@ app.use(express.json());
 const userRoutes = require("./Routers/userRoutes");
 const notesRoutes = require("./Routers/notesRoutes")
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://leafy-kitten-16d7e4.netlify.app",
     credentials:true
 }));
 const Port = process.env.PORT || 8000;
