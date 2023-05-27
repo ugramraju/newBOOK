@@ -53,7 +53,7 @@ const SignUp = () => {
           id="user_email"
           value={data.email || ""}
           onChange={(e) => setData({ ...data, email: e.target.value })}
-          autoComplete="username"
+          autoComplete="on"
         />
         <br />
         <input
@@ -62,7 +62,7 @@ const SignUp = () => {
           id="user_password"
           value={data.password || ""}
           onChange={(e) => setData({ ...data, password: e.target.value })}
-          autoComplete="new-password"
+          autoComplete="on"
         />
         <br />
         <input
@@ -71,7 +71,7 @@ const SignUp = () => {
           id="user_confirmPassword"
           value={data.confirmPassword || ""}
           onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
-          autoComplete="new-password"
+          autoComplete="on"
         />
         <br />
         <button type="submit" id="btn" onClick={handleSubmit}>
