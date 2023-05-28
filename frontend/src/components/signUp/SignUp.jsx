@@ -16,7 +16,7 @@ const SignUp = () => {
       return;
     }
 
-    if (data.password !== data.confirmPassword) {
+    if (data.password !== data.confirmpassword) {
       setErrorMsg("Password and Confirm Password do not match.");
       return;
     }
@@ -27,7 +27,7 @@ const SignUp = () => {
         {
           email: data.email,
           password: data.password,
-          confirmpassword: data.confirmPassword,
+          confirmpassword: data.confirmpassword,
         }
       );
       setData({});
@@ -73,7 +73,7 @@ const SignUp = () => {
           type="password"
           placeholder="Confirm Password"
           id="user_confirmPassword"
-          value={data.confirmPassword || ""}
+          value={data.confirmpassword || ""}
           onChange={(e) =>
             setData({ ...data, confirmpassword: e.target.value })
           }
