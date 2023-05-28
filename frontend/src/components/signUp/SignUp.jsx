@@ -40,7 +40,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error.response.data);
       if (error.response.data.message === "User already exists") {
-        setErrorMsg("User already exists. Please go and sign in.");
+        setErrorMsg("User already exists. Please go and sign in...");
       }
     }
   };
